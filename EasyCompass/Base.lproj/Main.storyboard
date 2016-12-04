@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="fEC-vx-Y17">
+                                <rect key="frame" x="36" y="30" width="300" height="322"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oov-1W-FTS" customClass="CompassView">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4He-K6-DSD">
+                                        <rect key="frame" x="0.0" y="300" width="300" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="360" translatesAutoresizingMaskIntoConstraints="NO" id="yao-Qb-th9">
+                                <rect key="frame" x="18" y="627" width="339" height="31"/>
+                                <connections>
+                                    <action selector="slideRotateValue:" destination="BYZ-38-t0r" eventType="valueChanged" id="bnT-Sm-06Q"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Night Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odV-ce-bI9">
+                                <rect key="frame" x="20" y="596.5" width="89.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="X4l-cP-xgN">
+                                <rect key="frame" x="119.5" y="591.5" width="51" height="31"/>
+                                <connections>
+                                    <action selector="switchNightNode:" destination="BYZ-38-t0r" eventType="valueChanged" id="FIh-MF-5DG"/>
+                                </connections>
+                            </switch>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="X4l-cP-xgN" firstAttribute="centerY" secondItem="odV-ce-bI9" secondAttribute="centerY" id="1sm-56-nVu"/>
+                            <constraint firstItem="X4l-cP-xgN" firstAttribute="leading" secondItem="odV-ce-bI9" secondAttribute="trailing" constant="10" id="EdE-9M-s8O"/>
+                            <constraint firstItem="odV-ce-bI9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="PrQ-66-JY9"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="yao-Qb-th9" secondAttribute="bottom" constant="10" id="UXw-kt-pYu"/>
+                            <constraint firstItem="yao-Qb-th9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="qQB-NI-Wns"/>
+                            <constraint firstItem="yao-Qb-th9" firstAttribute="top" secondItem="odV-ce-bI9" secondAttribute="bottom" constant="10" id="rXA-tk-Ubo"/>
+                            <constraint firstAttribute="trailing" secondItem="yao-Qb-th9" secondAttribute="trailing" constant="20" id="wCZ-SL-f4B"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="compassView" destination="oov-1W-FTS" id="b0O-bT-blP"/>
+                        <outlet property="nightModeLabel" destination="odV-ce-bI9" id="xse-hL-8Os"/>
+                        <outlet property="nightModeSwitch" destination="X4l-cP-xgN" id="FKd-Fb-NGg"/>
+                        <outlet property="rotateSlider" destination="yao-Qb-th9" id="cFm-hc-pgf"/>
+                        <outlet property="rotateValue" destination="4He-K6-DSD" id="DLW-So-ZaS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="117.59999999999999" y="122.78860569715144"/>
+        </scene>
+    </scenes>
+</document>
