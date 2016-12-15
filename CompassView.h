@@ -41,11 +41,13 @@
 //Scale digit settings
 @property(assign,nonatomic)BOOL displayMajorScaleDigits;
 @property(assign,nonatomic)BOOL displayMinorScaleDigits;
-@property(assign,nonatomic)CGFontRef majorScaleDigitFont;
-@property(assign,nonatomic)CGFontRef minorScaleDigitFont;
+@property(strong,nonatomic)UIFont *majorScaleDigitFont;
+@property(strong,nonatomic)UIFont *minorScaleDigitFont;
+@property(assign,nonatomic)CGFloat majorScaleDigitMargin;
+@property(assign,nonatomic)CGFloat minorScaleDigitMargin;
 @property(retain,nonatomic)NSArray* majorScaleDigitPositions;
-@property(retain,nonatomic)NSArray* majorScaleDigitTests;
+@property(retain,nonatomic)NSArray* majorScaleDigitTexts;
 @property(retain,nonatomic)NSArray* minorScaleDigitPositions;
-@property(retain,nonatomic)NSArray* minorScaleDigitTests;
+@property(retain,nonatomic)NSArray* minorScaleDigitTexts;
 
 @end

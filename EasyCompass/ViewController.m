@@ -25,25 +25,39 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    // Color configuration
     self.compassView.isInNightMode = NO;
-    self.compassView.padding = 10;
-    self.compassView.borderMargin = 40;
     self.compassView.dayModeBackgroundColor = [UIColor whiteColor];
     self.compassView.dayModeForegroundColor = [UIColor grayColor];
     self.compassView.nightModeBackgroundColor = [UIColor blackColor];
     self.compassView.nightModeForegroundColor = [UIColor whiteColor];
+    
+    // Border configuration
+    self.compassView.padding = 10;
+    self.compassView.borderMargin = 40;
     self.compassView.displayOuterBorder = YES;
     self.compassView.displayInnerBorder = YES;
     self.compassView.outerBorderWidth = 4;
     self.compassView.innerBorderWidth = 1;
+    
+    // Scale configuration
     self.compassView.displayScales = YES;
     self.compassView.displayMinorScales = YES;
     self.compassView.majorScaleCount = 12;
     self.compassView.minorScaleCountBetweenMajorScales = 5;
-    self.compassView.majorScaleLength = 15;
+    self.compassView.majorScaleLength = 12;
     self.compassView.majorScaleWidth = 2;
-    self.compassView.minorScaleLength = 10;
+    self.compassView.minorScaleLength = 8;
     self.compassView.minorScaleWidth = 1;
+    
+    // Scale digit configuration
+    self.compassView.displayMajorScaleDigits = YES;
+    UIFont *majorScaleDigitFont = [[UIFont preferredFontForTextStyle:UIFontTextStyleBody] fontWithSize:15];
+    self.compassView.majorScaleDigitFont = majorScaleDigitFont;
+    self.compassView.majorScaleDigitPositions = [NSArray arrayWithObjects: @0, @30, @60, @90, @120, @150, @180, @210, @240, @270, @300, @330, nil];
+    self.compassView.majorScaleDigitTexts = [NSArray arrayWithObjects: @"0", @"30", @"60", @"90", @"120", @"150", @"180", @"210", @"240", @"270", @"300", @"330",  nil];
+    
+    self.compassView.displayMinorScaleDigits = NO;
     
     [self.compassView setNeedsDisplay];
 }
