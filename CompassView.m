@@ -28,11 +28,11 @@
     
     //Handle the night mode
     CGContextAddRect(context, self.frame);
-    CGColorRef backgoundColor = self.isInNightMode ? self.nightModeBackgroundColor.CGColor : self.dayModeBackgroundColor.CGColor;
-    CGColorRef foregroundColor = self.isInNightMode ? self.nightModeForegroundColor.CGColor : self.dayModeForegroundColor.CGColor;
-    CGContextSetFillColorWithColor(context,backgoundColor);
+    UIColor *backgoundColor = self.isInNightMode ? self.nightModeBackgroundColor : self.dayModeBackgroundColor;
+    UIColor *foregroundColor = self.isInNightMode ? self.nightModeForegroundColor : self.dayModeForegroundColor;
+    CGContextSetFillColorWithColor(context,backgoundColor.CGColor);
     CGContextFillPath(context);
-    CGContextSetStrokeColorWithColor(context, foregroundColor);
+    CGContextSetStrokeColorWithColor(context, foregroundColor.CGColor);
     
 //    CFRelease(backgoundColor);
 //    CFRelease(foregroundColor);
@@ -93,17 +93,16 @@
     // Draw Scale Digit
     if(self.displayMajorScaleDigits){
         if([self.majorScaleDigitPositions count] == [self.majorScaleDigitTexts count]){
-            for(int i = 0; i < [self.majorScaleDigitPositions count]; i++){
+            for(int i = 0; i < self.majorScaleDigitPositions.count; i++){
                 float pos = [[self.majorScaleDigitPositions objectAtIndex:i] floatValue];
                 NSString *digit = [self.majorScaleDigitTexts objectAtIndex:i];
                 
-                CFStringRef majorScaleDigitFontName = (__bridge CFStringRef)self.majorScaleDigitFont.fontName;
                 CGFloat majorScaleDigitFontSize = self.majorScaleDigitFont.pointSize;
-                CTFontRef majorScaleDigitFontRef = CTFontCreateWithName(majorScaleDigitFontName, majorScaleDigitFontSize, NULL);
+                UIFont *majorScaleDigitFont = [[UIFont preferredFontForTextStyle:UIFontTextStyleBody] fontWithSize:majorScaleDigitFontSize];
                 NSMutableAttributedString *attributeMajorScaleDigit = [[NSMutableAttributedString alloc] initWithString:digit];
                 NSDictionary *majorScaleDigitDict = @{
-                                          (__bridge id)kCTForegroundColorAttributeName:(__bridge id)foregroundColor,
-                                          (__bridge id)kCTFontAttributeName: (__bridge id)majorScaleDigitFontRef
+                                                      NSForegroundColorAttributeName:foregroundColor,
+                                                      NSFontAttributeName:majorScaleDigitFont
                                           };
                 [attributeMajorScaleDigit setAttributes:majorScaleDigitDict range:NSMakeRange(0, digit.length)];
                 CGSize majorScaleDigitSize = [attributeMajorScaleDigit size];
@@ -120,6 +119,33 @@
                 CGContextTranslateCTM(context, -majorScaleDigitX, -majorScaleDigitY);
 
             } // end of major scale digit for loop
+            if(self.displayMinorScaleDigits){
+                for(int i = 0;i < self.minorScaleDigitPositions.count; i++){
+                    float pos = [[self.minorScaleDigitPositions objectAtIndex:i] floatValue];
+                    NSString *digit = [self.minorScaleDigitTexts objectAtIndex:i];
+                    
+                    CGFloat minorScaleDigitFontSize = self.minorScaleDigitFont.pointSize;
+                    UIFont *minorScaleDigitFont = [[UIFont preferredFontForTextStyle:UIFontTextStyleBody] fontWithSize:minorScaleDigitFontSize];
+                    NSMutableAttributedString *attributeMinorScaleDigit = [[NSMutableAttributedString alloc] initWithString:digit];
+                    NSDictionary *minorScaleDigitDict = @{
+                                                          NSForegroundColorAttributeName:foregroundColor,
+                                                          NSFontAttributeName:minorScaleDigitFont
+                                                          };
+                    [attributeMinorScaleDigit setAttributes:minorScaleDigitDict range:NSMakeRange(0, digit.length)];
+                    CGSize minorScaleDigitSize = [attributeMinorScaleDigit size];
+                    
+                    CGFloat minorScaleDigitX = self.padding + radius + (radius - self.minorScaleLength - self.minorScaleDigitMargin) * cosf((90 - pos) * M_PI / 180.0) + minorScaleDigitSize.width * cosf((180 - pos) * M_PI / 180.0) / 2;
+                    CGFloat minorScaleDigitY = self.padding + radius - (radius - self.minorScaleLength - self.minorScaleDigitMargin) * sinf((90 - pos) * M_PI / 180.0) - minorScaleDigitSize.width * sinf((180 - pos) * M_PI / 180.0) / 2;
+                    
+                    CGContextTranslateCTM(context, minorScaleDigitX, minorScaleDigitY);
+                    CGContextRotateCTM(context, pos * M_PI / 180.0);
+                    
+                    [attributeMinorScaleDigit drawInRect:CGRectMake(0, 0, minorScaleDigitSize.width, minorScaleDigitSize.height)];
+                    
+                    CGContextRotateCTM(context, -pos * M_PI / 180.0);
+                    CGContextTranslateCTM(context, -minorScaleDigitX, -minorScaleDigitY);
+                }
+            } // end of minor scale digit statement
         } // end of if 'major scale digit pos" and "major scale digit text" equal
     } // end of major scale digit if statement
 }

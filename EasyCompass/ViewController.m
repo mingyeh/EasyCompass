@@ -16,6 +16,7 @@
 @property(weak,nonatomic) IBOutlet UILabel *rotateValue;
 @property(weak,nonatomic) IBOutlet UILabel *nightModeLabel;
 @property(weak,nonatomic) IBOutlet CompassView *compassView;
+@property(assign,nonatomic) CGAffineTransform defaultTransform;
 
 @end
 
@@ -52,14 +53,21 @@
     
     // Scale digit configuration
     self.compassView.displayMajorScaleDigits = YES;
-    UIFont *majorScaleDigitFont = [[UIFont preferredFontForTextStyle:UIFontTextStyleBody] fontWithSize:15];
+    UIFont *majorScaleDigitFont = [[UIFont preferredFontForTextStyle:UIFontTextStyleBody] fontWithSize:18];
     self.compassView.majorScaleDigitFont = majorScaleDigitFont;
-    self.compassView.majorScaleDigitPositions = [NSArray arrayWithObjects: @0, @30, @60, @90, @120, @150, @180, @210, @240, @270, @300, @330, nil];
-    self.compassView.majorScaleDigitTexts = [NSArray arrayWithObjects: @"0", @"30", @"60", @"90", @"120", @"150", @"180", @"210", @"240", @"270", @"300", @"330",  nil];
+    self.compassView.majorScaleDigitMargin = 3;
+    self.compassView.majorScaleDigitPositions = [NSArray arrayWithObjects: @0, @90, @180, @270, nil];
+    self.compassView.majorScaleDigitTexts = [NSArray arrayWithObjects: @"N", @"E", @"S", @"W", nil];
     
-    self.compassView.displayMinorScaleDigits = NO;
+    self.compassView.displayMinorScaleDigits = YES;
+    UIFont *minorScaleDigitFont = [[UIFont preferredFontForTextStyle:UIFontTextStyleBody] fontWithSize:12];
+    self.compassView.minorScaleDigitFont = minorScaleDigitFont;
+    self.compassView.minorScaleDigitMargin = 3;
+    self.compassView.minorScaleDigitPositions = [NSArray arrayWithObjects: @30, @60, @120, @150, @210, @240, @300, @330, nil];
+    self.compassView.minorScaleDigitTexts = [NSArray arrayWithObjects: @"30", @"60", @"120", @"150", @"210", @"240", @"300", @"330",  nil];
     
     [self.compassView setNeedsDisplay];
+    self.defaultTransform = [self.compassView transform];
 }
 
 -(IBAction)switchNightNode:(UISwitch*)sender{
@@ -67,11 +75,18 @@
     self.rotateValue.textColor = sender.on ? [UIColor whiteColor] : [UIColor blackColor];
     self.nightModeLabel.textColor = sender.on ? [UIColor whiteColor] : [UIColor blackColor];
     self.compassView.isInNightMode = sender.on;
+
+    self.compassView.transform = self.defaultTransform;
     [self.compassView setNeedsDisplay];
+    self.rotateSlider.value = 0;
+    self.rotateValue.text = @"000";
 }
 
 -(IBAction)slideRotateValue:(UISlider*)sender{
     self.rotateValue.text = [NSString stringWithFormat:@"%.0f",self.rotateSlider.value];
+    [UIView animateWithDuration:0.5 animations:^{
+        self.compassView.transform = CGAffineTransformMakeRotation(-self.rotateSlider.value * M_PI / 180.0);
+    }];
 }
 
 @end
